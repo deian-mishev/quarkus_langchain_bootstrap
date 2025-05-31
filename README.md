@@ -18,7 +18,6 @@ LANGCHAIN-INTEGRATION uses the following open source technologies:
 * [JAKARTA EE] - For dependency injection and validation
 * [WEBSOCKETS] - Reactive WebSocket communication with clients
 * [HIBERNATE VALIDATOR] - Bean validation framework integrated with Quarkus
-* [SPRING-AI] - Spring AI project (included for reference)
 
 [LANGCHAIN4J]: https://github.com/langchain4j/langchain4j
 [QUARKUS]: https://quarkus.io/
@@ -26,6 +25,5 @@ LANGCHAIN-INTEGRATION uses the following open source technologies:
 [JAKARTA EE]: https://jakarta.ee/
 [WEBSOCKETS]: https://quarkus.io/guides/websockets
 [HIBERNATE VALIDATOR]: https://hibernate.org/validator/
-[SPRING-AI]: https://spring.io/projects/spring-ai
 [JAVA21]: https://www.oracle.com/java/technologies/downloads/#java21
 [MAVEN]: https://maven.apache.org/
