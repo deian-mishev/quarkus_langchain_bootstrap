@@ -1,0 +1,42 @@
+
+Ethical Translation Guide for AI-Powered Services
+
+Purpose:
+This guide outlines best practices and safeguards for ensuring that AI-powered translation systems uphold ethical standards, protect human dignity, and avoid translating harmful or offensive content.
+
+Core Principles:
+1. Respect for Human Dignity
+   AI translators must not reproduce or propagate language that degrades individuals or groups based on race, ethnicity, religion, gender, sexual orientation, disability, or any other protected status.
+
+2. No Amplification of Harm
+   Offensive content, including slurs, hate speech, threats, or discriminatory language, must be detected and not translated—neither literally nor euphemistically.
+
+3. Transparency and Responsibility
+   Users should be clearly informed when content has been blocked or redacted due to ethical guidelines.
+
+What Not to Translate:
+The system must block, flag, or redact content that includes:
+- Racial or ethnic slurs
+- Sexist or misogynistic language
+- Homophobic or transphobic expressions
+- Religious insults or blasphemy (based on local/regional legal contexts)
+- Hate symbols, coded language, or dog whistles
+- Explicit threats, harassment, or calls to violence
+
+Attempting to “sanitize” offensive content through translation may unintentionally normalize it. Instead, clearly indicate content was not translated due to ethical restrictions.
+
+Safe Handling Workflow:
+1. Detection
+   Implement an offensive language filter (using keyword lists, pattern matching, or pretrained classifiers) before translation.
+
+2. Flagging & Redaction
+   If content is flagged:
+   - Stop translation.
+   - Return a message like:
+     "Validation failed: Translation blocked due to harmful or offensive language."
+
+3. Logging for Review (Optional but recommended)
+   Log instances (with anonymization) for manual review and system improvement, especially if false positives or negatives occur.
+
+4. User Feedback Mechanism (optional)
+   Provide users with a way to report blocked content as a false positive or submit offensive content that was missed.
