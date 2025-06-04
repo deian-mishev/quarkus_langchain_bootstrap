@@ -1,8 +1,8 @@
 package com.example.langchain_integration.resources;
 
 import com.example.langchain_integration.dto.TranslationRequest;
-import com.example.langchain_integration.exceptions.PromptInjectionGuard;
-import com.example.langchain_integration.exceptions.ValidationErrorFormatter;
+import com.example.langchain_integration.validation.PromptInjectionGuard;
+import com.example.langchain_integration.validation.ValidationErrorFormatter;
 import dev.langchain4j.data.message.UserMessage;
 import com.example.langchain_integration.services.TranslationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +11,8 @@ import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.WebSocket;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.infrastructure.Infrastructure;
+import io.smallrye.mutiny.subscription.MultiEmitter;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Validator;
 import jakarta.validation.ConstraintViolation;
@@ -18,6 +20,7 @@ import jakarta.validation.ConstraintViolation;
 import java.util.Set;
 
 @WebSocket(path = "/translate")
+@RolesAllowed("user")
 public class TranslationWebsocketResource {
 
     @Inject
@@ -47,32 +50,40 @@ public class TranslationWebsocketResource {
                 try {
                     TranslationRequest req = objectMapper.readValue(userQuery, TranslationRequest.class);
                     Set<ConstraintViolation<TranslationRequest>> violations = validator.validate(req);
-                    if (!violations.isEmpty()) {
-                        emitter.emit(validationErrorFormatter.formatViolation(violations));
-                        emitter.complete();
-                        return;
-                    }
+                    if (handleViolations(emitter, violations)) return;
 
                     if (!promptInjectionGuard.validate(UserMessage.userMessage(req.getMessage())).isSuccess()) {
-                        emitter.emit(validationErrorFormatter.formatViolation("Prompt injection detected"));
-                        emitter.complete();
+                        emitError(emitter, "Prompt injection detected");
                         return;
                     }
 
                     translationService.translate(req.getMessage(), req.getLanguage())
                             .subscribe().with(
                                     emitter::emit,
-                                    failure -> {
-                                        emitter.emit(validationErrorFormatter.formatViolation("Error: " + failure.getMessage()));
-                                        emitter.complete();
-                                    },
+                                    failure -> emitError(emitter, "Error: " + failure.getMessage()),
                                     emitter::complete);
 
                 } catch (Exception e) {
-                    emitter.emit(validationErrorFormatter.formatViolation("Error: " + e.getMessage()));
-                    emitter.complete();
+                    emitError(emitter, "Error: " + e.getMessage());
                 }
             });
         });
+    }
+
+    private void emitError(MultiEmitter<? super String> emitter, String message) {
+        if (emitter != null && message != null) {
+            emitter.emit(validationErrorFormatter.formatViolation(message));
+            emitter.complete();
+        }
+    }
+
+    private boolean handleViolations(MultiEmitter<? super String> emitter,
+                                     Set<ConstraintViolation<TranslationRequest>> violations) {
+        if (violations != null && !violations.isEmpty()) {
+            emitter.emit(validationErrorFormatter.formatViolation(violations));
+            emitter.complete();
+            return true;
+        }
+        return false;
     }
 }

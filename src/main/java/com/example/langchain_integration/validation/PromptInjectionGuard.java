@@ -1,4 +1,4 @@
-package com.example.langchain_integration.exceptions;
+package com.example.langchain_integration.validation;
 
 import com.example.langchain_integration.services.PromptInjectionDetectionService;
 import dev.langchain4j.data.message.UserMessage;

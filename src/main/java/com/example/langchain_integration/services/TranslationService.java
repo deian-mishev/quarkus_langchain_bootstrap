@@ -1,13 +1,13 @@
 package com.example.langchain_integration.services;
 
-import com.example.langchain_integration.augmentors.TranslateResponseAugmentor;
+import com.example.langchain_integration.augmentors.TranslateResponseAugmenter;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import io.quarkiverse.langchain4j.RegisterAiService;
 import io.smallrye.mutiny.Multi;
 import jakarta.enterprise.context.ApplicationScoped;
 
-@RegisterAiService(retrievalAugmentor = TranslateResponseAugmentor.class)
+@RegisterAiService(retrievalAugmentor = TranslateResponseAugmenter.class)
 @ApplicationScoped
 public interface TranslationService {
 

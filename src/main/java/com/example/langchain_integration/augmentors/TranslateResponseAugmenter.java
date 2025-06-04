@@ -12,12 +12,12 @@ import jakarta.inject.Inject;
 import java.util.function.Supplier;
 
 @ApplicationScoped
-public class TranslateResponseAugmentor implements Supplier<RetrievalAugmentor> {
+public class TranslateResponseAugmenter implements Supplier<RetrievalAugmentor> {
 
     private final EmbeddingStoreContentRetriever retriever;
 
     @Inject
-    public TranslateResponseAugmentor(EmbeddingStore<TextSegment> store, EmbeddingModel model) {
+    public TranslateResponseAugmenter(EmbeddingStore<TextSegment> store, EmbeddingModel model) {
         this.retriever = EmbeddingStoreContentRetriever.builder().embeddingModel(model).embeddingStore(store).maxResults(20).build();
     }
 

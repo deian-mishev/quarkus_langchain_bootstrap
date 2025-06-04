@@ -16,14 +16,22 @@ LANGCHAIN-INTEGRATION uses the following open source technologies:
 * [LANGCHAIN4J] - Java SDK for LangChain integration
 * [OPENAI] - AI model integration for NLP tasks
 * [JAKARTA EE] - For dependency injection and validation
-* [WEBSOCKETS] - Reactive WebSocket communication with clients
-* [HIBERNATE VALIDATOR] - Bean validation framework integrated with Quarkus
+* [WEBSOCKETS-NEXT] - Modern reactive WebSocket support with Quarkus-native security integration
+* [HIBERNATE VALIDATOR] - Bean validation integrated with Quarkus and Jakarta EE
+* [QUARKUS-SECURITY-JWT] - JWT-based authentication using SmallRye JWT
+* [QUARKUS-JDBC] - PostgreSQL database access using Quarkus JDBC
+* [QUARKUS-PANACHE] - Simplified Hibernate ORM with active record pattern
+* [QUARKUS-REST-JACKSON] - JSON (de)serialization for REST endpoints using Jackson  
 
 [LANGCHAIN4J]: https://github.com/langchain4j/langchain4j
 [QUARKUS]: https://quarkus.io/
 [OPENAI]: https://openai.com/
 [JAKARTA EE]: https://jakarta.ee/
-[WEBSOCKETS]: https://quarkus.io/guides/websockets
+[WEBSOCKETS-NEXT]: https://quarkus.io/guides/websockets-next
 [HIBERNATE VALIDATOR]: https://hibernate.org/validator/
+[QUARKUS-SECURITY-JWT]: https://quarkus.io/guides/security-jwt
+[QUARKUS-JDBC]: https://quarkus.io/guides/datasource
+[QUARKUS-PANACHE]: https://quarkus.io/guides/hibernate-orm-panache
+[QUARKUS-REST-JACKSON]: https://quarkus.io/guides/rest-json
 [JAVA21]: https://www.oracle.com/java/technologies/downloads/#java21
 [MAVEN]: https://maven.apache.org/

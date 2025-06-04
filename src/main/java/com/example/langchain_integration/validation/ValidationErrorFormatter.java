@@ -1,9 +1,8 @@
-package com.example.langchain_integration.exceptions;
+package com.example.langchain_integration.validation;
 
 import com.example.langchain_integration.dto.TranslationRequest;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
 
 import java.util.Comparator;
 import java.util.Set;
