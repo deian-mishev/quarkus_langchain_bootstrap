@@ -22,16 +22,18 @@ LANGCHAIN-INTEGRATION uses the following open source technologies:
 * [QUARKUS-JDBC] - PostgreSQL database access using Quarkus JDBC
 * [QUARKUS-PANACHE] - Simplified Hibernate ORM with active record pattern
 * [QUARKUS-REST-JACKSON] - JSON (de)serialization for REST endpoints using Jackson  
+* [QUARKUS ELYTRON SECURITY JDBC] - Secure JDBC-based authentication and role mapping
 
 [LANGCHAIN4J]: https://github.com/langchain4j/langchain4j
 [QUARKUS]: https://quarkus.io/
 [OPENAI]: https://openai.com/
 [JAKARTA EE]: https://jakarta.ee/
-[WEBSOCKETS-NEXT]: https://quarkus.io/guides/websockets-next
-[HIBERNATE VALIDATOR]: https://hibernate.org/validator/
+[WEBSOCKETS-NEXT]: https://quarkus.io/guides/websockets-next-tutorial
+[HIBERNATE VALIDATOR]: https://quarkus.io/guides/validation
 [QUARKUS-SECURITY-JWT]: https://quarkus.io/guides/security-jwt
 [QUARKUS-JDBC]: https://quarkus.io/guides/datasource
 [QUARKUS-PANACHE]: https://quarkus.io/guides/hibernate-orm-panache
 [QUARKUS-REST-JACKSON]: https://quarkus.io/guides/rest-json
+[QUARKUS ELYTRON SECURITY JDBC]: https://quarkus.io/guides/security-jdbc
 [JAVA21]: https://www.oracle.com/java/technologies/downloads/#java21
 [MAVEN]: https://maven.apache.org/

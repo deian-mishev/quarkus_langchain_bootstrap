@@ -4,6 +4,7 @@ import com.example.langchain_integration.dto.LoginRequest;
 import com.example.langchain_integration.dto.SignupRequest;
 import com.example.langchain_integration.model.User;
 import com.example.langchain_integration.services.AccountService;
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -25,8 +26,8 @@ public class UserResource {
     AccountService accountService;
 
     @POST
-    @RolesAllowed("admin")
     @Path("/signup")
+    @RolesAllowed("admin")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response signup(@Valid SignupRequest request) {
         User user = accountService.signupUser(request.username, request.password, request.role);
@@ -35,6 +36,7 @@ public class UserResource {
 
     @POST
     @Path("/login")
+    @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(@Valid LoginRequest login) {
