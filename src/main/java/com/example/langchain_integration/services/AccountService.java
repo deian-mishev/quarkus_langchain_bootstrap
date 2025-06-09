@@ -1,38 +1,42 @@
 package com.example.langchain_integration.services;
 
+import com.example.langchain_integration.dto.LoginRequest;
+import com.example.langchain_integration.dto.SignupRequest;
 import com.example.langchain_integration.model.User;
-import com.example.langchain_integration.validation.ValidUserRole;
-import io.quarkus.elytron.security.common.BcryptUtil;
+import com.example.langchain_integration.repository.UserRepository;
+import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.jwt.Claims;
+
+import java.util.Set;
 
 @ApplicationScoped
 public class AccountService {
+    @Inject
+    UserRepository userRepository;
 
-    @Transactional
-    public User signupUser(@NotBlank String username, @NotBlank String password, @ValidUserRole @NotBlank String role) {
-        User existingUser = User.findByUsername(username);
-        if (existingUser != null) {
-            throw new IllegalArgumentException("Username already exists!");
+    @Inject
+    PasswordService passwordService;
+
+    public User signupUser(SignupRequest request, String creator) {
+        return userRepository.createUser(
+                request.username, request.password,
+                request.role, request.email, creator);
+    }
+
+    public Response loginUser(LoginRequest login) {
+        User user = User.findByEmail(login.email);
+        if (user == null || !passwordService.verifyPassword(login.password, user.password)) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid credentials").build();
         }
 
-        String encryptedPassword = BcryptUtil.bcryptHash(password);
+        String token = Jwt.issuer("https://translator-app")
+                .upn(user.username)
+                .claim(Claims.email, user.email)
+                .groups(Set.of(user.role)).sign();
 
-        User user = new User();
-        user.username = username;
-        user.password = encryptedPassword;
-        user.role = role;
-        user.persist();
-
-        return user;
-    }
-
-    public boolean verifyPassword(String rawPassword, String encryptedPassword) {
-        return BcryptUtil.matches(rawPassword, encryptedPassword);
-    }
-
-    public User findByUsername(@NotBlank String username) {
-        return User.findByUsername(username);
+        return Response.ok("{\"token\":\"" + token + "\"}").build();
     }
 }

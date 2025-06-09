@@ -1,6 +1,7 @@
 package com.example.langchain_integration.dto;
 
 import com.example.langchain_integration.validation.ValidUserRole;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class SignupRequest {
@@ -14,4 +15,8 @@ public class SignupRequest {
     @NotBlank
     @ValidUserRole
     public String role;
+
+    @Email
+    @NotBlank
+    public String email;
 }
